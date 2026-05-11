@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogo Elite - Melcity SA</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue-900: #1A3F7A;
+  --blue-800: #1E52A4;
+  --blue-700: #2563C8;
+  --blue-600: #3B82E8;
+  --blue-100: #DDEAF8;
+  --blue-50:  #F0F4FA;
+  --gray-50:  #FAFAFA;
+  --gray-100: #F5F5F5;
+  --gray-200: #E0E0E0;
+  --gray-500: #9E9E9E;
+  --gray-700: #424242;
+  --shadow:         0 2px 8px rgba(0,0,0,.10);
+  --shadow-hover:   0 6px 24px rgba(0,0,0,.16);
+  --radius:   10px;
+  --font:     'Segoe UI', Arial, sans-serif;
+  --c-excellence: #1A237E;
+  --c-plus:       #1565C0;
+  --c-classic:    #546E7A;
+  --c-maxwipe:    #BF360C;
+  --c-default:    #37474F;
+}
+body { font-family: var(--font); background: var(--blue-50); color: var(--gray-700); }
+
+/* ─── Header ─── */
+.header {
+  background: #fff;
+  color: #1A3F7A;
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  border-bottom: 3px solid var(--blue-100);
+}
+.header-logos {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+.header-logo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  padding: 0;
+  background: transparent;
+}
+.header-logo-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--blue-100);
+  margin: 0 14px;
+}
+.header-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-title h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1A3F7A;
+  letter-spacing: .3px;
+  white-space: nowrap;
+}
+.header-title-elite {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.header-subtitle {
+  font-size: .72rem;
+  color: var(--gray-500);
+  margin-left: auto;
+  white-space: nowrap;
+}
+.header-actions  { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+/* Selector vendedor */
+.vendedor-wrap { display: flex; align-items: center; gap: 8px; }
+.vendedor-wrap label { font-size: .78rem; font-weight: 600; color: #1A3F7A; white-space: nowrap; }
+.vendedor-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1.5px solid var(--blue-100);
+  background: var(--blue-50);
+  color: #1A3F7A;
+  font-size: .82rem;
+  cursor: pointer;
+  outline: none;
+  min-width: 160px;
+}
+.vendedor-select:focus { border-color: var(--blue-700); }
+.btn-outline-blue {
+  background: transparent;
+  border: 2px solid var(--blue-700);
+  color: var(--blue-700);
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.btn-outline-blue:hover { background: var(--blue-700); color: #fff; }
+
+/* ─── Botones ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: opacity .15s, transform .1s;
+  text-decoration: none;
+}
+.btn:hover  { opacity: .88; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn-outline { background: transparent; border: 2px solid #fff; color: #fff; }
+.btn-blue    { background: var(--blue-700); color: #fff; }
+.btn-accent  { background: #F57C00; color: #fff; }
+.btn-sm      { padding: 5px 12px; font-size: .78rem; }
+
+/* ─── Nav de categorias ─── */
+.cat-nav {
+  background: #fff;
+  border-bottom: 3px solid var(--blue-100);
+  padding: 0 20px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  position: sticky;
+  top: 62px;
+  z-index: 99;
+  scrollbar-width: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.cat-nav::-webkit-scrollbar { display: none; }
+.cat-tab {
+  padding: 13px 18px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: .84rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+  flex-shrink: 0;
+  margin-bottom: -3px;
+}
+.cat-tab:hover  { color: var(--blue-700); }
+.cat-tab.active { color: var(--blue-700); border-bottom-color: var(--blue-700); }
+
+/* ─── Busqueda ─── */
+.search-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px 24px 0;
+}
+.search-bar { width: 100%; max-width: 520px; position: relative; }
+.search-bar input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border: 2px solid var(--gray-200);
+  border-radius: 8px;
+  font-size: .92rem;
+  outline: none;
+  transition: border-color .15s;
+  background: #fff;
+}
+.search-bar input:focus { border-color: var(--blue-700); }
+.search-bar .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-500);
+  pointer-events: none;
+}
+
+/* ─── Contenedor ─── */
+.main-container { max-width: 1300px; margin: 0 auto; padding: 24px; }
+
+/* ─── Banner de categoria ─── */
+.cat-section { margin-bottom: 48px; }
+.cat-banner {
+  background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 100%);
+  color: #fff;
+  padding: 18px 28px;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0,31,88,.25);
+}
+.cat-banner-icon { font-size: 2rem; flex-shrink: 0; }
+.cat-banner-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.cat-banner-count { font-size: .8rem; opacity: .7; margin-top: 2px; }
+
+/* ─── Grid ─── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* ─── Tarjeta ─── */
+.product-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  transition: box-shadow .2s, transform .2s;
+}
+.product-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+.product-card.selected {
+  outline: 3px solid #F57C00;
+  outline-offset: -1px;
+}
+
+/* Barra lateral de linea */
+.line-bar {
+  width: 26px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-default);
+}
+.line-bar.line-excellence { background: var(--c-excellence); }
+.line-bar.line-plus       { background: var(--c-plus); }
+.line-bar.line-classic    { background: var(--c-classic); }
+.line-bar.line-maxwipe    { background: var(--c-maxwipe); }
+.line-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,.85);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* Contenido */
+.card-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+/* Imagen */
+.img-wrap {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background: #F8F9FB;
+  border-bottom: 1px solid var(--blue-100);
+  flex-shrink: 0;
+}
+.img-wrap img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  z-index: 2;
+}
+.img-fallback {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+  background: var(--blue-50);
+  z-index: 1;
+}
+
+/* Cuerpo */
+.card-body {
+  padding: 12px 13px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.prod-code {
+  font-size: .72rem;
+  font-weight: 800;
+  color: var(--blue-700);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.prod-name {
+  font-size: .88rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Specs */
+.specs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+}
+.specs-list li {
+  font-size: .72rem;
+  color: var(--gray-700);
+  line-height: 1.4;
+}
+.specs-list li .sk { color: var(--gray-500); }
+
+.btn-ver-mas {
+  background: none; border: none;
+  color: var(--blue-700);
+  font-size: .72rem; font-weight: 600;
+  cursor: pointer; padding: 0;
+  text-align: left; width: fit-content;
+}
+.btn-ver-mas:hover { text-decoration: underline; }
+
+.specs-extra { display: none; }
+.specs-extra.open { display: flex; flex-direction: column; gap: 2px; }
+
+.card-divider {
+  border: none;
+  border-top: 1px solid var(--blue-100);
+  margin: 6px 0 2px;
+}
+
+/* Precio */
+.product-pricing { margin-top: auto; }
+.price-main { font-size: 1.05rem; font-weight: 800; color: var(--blue-800); }
+.price-label { font-size: .68rem; color: var(--gray-500); margin-top: 1px; }
+.price-uso { font-size: .72rem; color: var(--gray-500); margin-top: 1px; }
+.price-uso strong { color: var(--blue-700); }
+.price-sin { font-size: .82rem; color: #aaa; font-style: italic; }
+
+/* Footer */
+.card-footer { padding: 8px 13px; border-top: 1px solid var(--blue-100); }
+.btn-compare {
+  width: 100%;
+  padding: 6px;
+  border: 2px solid var(--blue-700);
+  background: transparent;
+  color: var(--blue-700);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: .75rem;
+  font-weight: 700;
+  transition: all .15s;
+}
+.btn-compare:hover, .btn-compare.active {
+  background: var(--blue-700); color: #fff;
+}
+.btn-compare:disabled {
+  border-color: var(--gray-200); color: var(--gray-500); cursor: not-allowed;
+}
+
+/* ─── Barra comparacion ─── */
+.compare-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--blue-900);
+  color: #fff;
+  padding: 12px 24px;
+  display: flex; align-items: center; gap: 14px;
+  z-index: 200;
+  box-shadow: 0 -4px 16px rgba(0,0,0,.3);
+  transform: translateY(100%);
+  transition: transform .3s ease;
+}
+.compare-bar.visible { transform: translateY(0); }
+.compare-bar-label { font-weight: 700; font-size: .85rem; flex-shrink: 0; }
+.compare-bar-items { display: flex; gap: 10px; flex: 1; flex-wrap: wrap; }
+.compare-chip {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: .8rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.compare-chip button {
+  background: none; border: none; color: #fff;
+  cursor: pointer; font-size: 1rem; line-height: 1; opacity: .7;
+}
+.compare-chip button:hover { opacity: 1; }
+
+/* ─── Modales ─── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 300;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #fff; border-radius: 12px;
+  max-width: 900px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 8px 40px rgba(0,0,0,.3);
+}
+.modal-header {
+  background: var(--blue-900); color: #fff;
+  padding: 14px 22px;
+  border-radius: 12px 12px 0 0;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 1;
+}
+.modal-header h2 { font-size: 1rem; font-weight: 700; }
+.modal-close {
+  background: none; border: none; color: #fff;
+  font-size: 1.4rem; cursor: pointer; opacity: .8;
+}
+.modal-close:hover { opacity: 1; }
+.modal-body { padding: 22px; }
+
+/* Tabla comparacion */
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th, .compare-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--gray-200);
+  text-align: left; font-size: .84rem; vertical-align: top;
+}
+.compare-table thead th { background: var(--blue-900); color: #fff; font-weight: 700; }
+.compare-table thead th:first-child { width: 28%; }
+.compare-table tr:nth-child(even) td { background: var(--blue-50); }
+.compare-table td:first-child {
+  font-weight: 600; color: var(--gray-700); background: #fff !important;
+}
+.compare-img-row td { text-align: center; padding: 14px; }
+.compare-img-row img { max-height: 140px; object-fit: contain; max-width: 100%; }
+.compare-price-row td { font-size: 1rem; font-weight: 800; color: var(--blue-800); }
+
+/* Botón imprimir comparación */
+.btn-print-comp {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.4);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-print-comp:hover { background: rgba(255,255,255,.28); }
+
+/* Modal PDF */
+.pdf-modal .modal { max-width: 400px; }
+.pdf-options { display: flex; flex-direction: column; gap: 12px; }
+.pdf-option {
+  padding: 14px; border: 2px solid var(--gray-200);
+  border-radius: 8px; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.pdf-option:hover { border-color: var(--blue-700); background: var(--blue-50); }
+.pdf-option h3 { font-size: .92rem; color: #222; margin-bottom: 4px; }
+.pdf-option p  { font-size: .78rem; color: var(--gray-500); }
+
+/* Estado vacio */
+.empty-state { text-align: center; padding: 80px 20px; color: var(--gray-500); }
+.empty-state .icon { font-size: 3.5rem; }
+.empty-state p { margin-top: 14px; font-size: .92rem; }
+
+/* ─── Footer vendedor ─── */
+.vendedor-footer {
+  display: none;
+  background: linear-gradient(135deg, #1A3F7A 0%, #2563C8 100%);
+  color: #fff;
+  padding: 18px 32px;
+  margin-top: 32px;
+  border-radius: 12px;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 16px rgba(26,63,122,.25);
+}
+.vendedor-footer.visible { display: flex; }
+.vendedor-foto {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 3px solid rgba(255,255,255,.5);
+  flex-shrink: 0;
+}
+.vendedor-info { flex: 1; }
+.vendedor-nombre { font-size: 1.1rem; font-weight: 800; }
+.vendedor-cargo  { font-size: .8rem; opacity: .8; margin-top: 3px; }
+.vendedor-contacto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+}
+.v-dato { font-size: .82rem; opacity: .92; }
+.v-sep  { opacity: .4; font-size: .75rem; }
+
+/* ─── Responsive ─── */
+@media (max-width: 1100px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 780px)  { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px) {
+  .vendedor-wrap label { display: none; }
+  .vendedor-select { min-width: 130px; }
+}
+@media (max-width: 520px) {
+  .header { padding: 8px 12px; gap: 8px; flex-wrap: wrap; }
+  .header-logo { height: 32px; }
+  .header-title-elite { height: 24px; }
+  .header-subtitle { display: none; }
+  .header-title h1 { font-size: .88rem; }
+  .main-container { padding: 14px 10px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .compare-bar { flex-wrap: wrap; }
+  .vendedor-footer { flex-direction: column; text-align: center; }
+}
+
+/* ─── Print / PDF ─── */
+@media print {
+  .header { position: relative; top: auto; box-shadow: none; }
+  .cat-nav, .search-wrap, .compare-bar,
+  .card-footer, .btn-ver-mas, .specs-extra,
+  .vendedor-select, .vendedor-wrap label,
+  .header-actions .btn-outline-blue { display: none !important; }
+  .vendedor-footer.visible { display: flex !important; }
+  /* Imprimir comparación: ocultar todo salvo el modal activo */
+  body.printing-compare #mainContent,
+  body.printing-compare .cat-nav,
+  body.printing-compare .search-wrap,
+  body.printing-compare .compare-bar { display: none !important; }
+  body.printing-compare .vendedor-footer.visible { display: none !important; }
+  body.printing-compare #vendedorFooterPrint { display: flex !important; }
+  body.printing-compare .modal-overlay.open {
+    display: block !important;
+    position: static !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  body.printing-compare .modal {
+    box-shadow: none !important;
+    max-width: 100% !important;
+  }
+  body.printing-compare .modal-header { border-radius: 0 !important; }
+  body.printing-compare .btn-print-comp,
+  body.printing-compare .modal-close { display: none !important; }
+  body { background: #fff; }
+  .main-container { padding: 0; max-width: 100%; }
+  .cat-section { margin-bottom: 20px; page-break-after: always; }
+  .cat-section:last-child { page-break-after: avoid; }
+  .product-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .product-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+  .img-wrap { height: 120px; }
+  .cat-section.print-hide { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-logos">
+    <img class="header-logo" src="img/logo_transparent.png" alt="Melcity SA">
+    <div class="header-logo-divider"></div>
+  </div>
+  <div class="header-title">
+    <h1>Catálogo de Productos</h1>
+    <img class="header-title-elite" src="img/logo_elite.png" alt="Elite">
+    <span class="header-subtitle">Actualizado: 11/05/2026 13:46</span>
+  </div>
+  <div class="header-actions">
+    <div class="vendedor-wrap">
+      <label for="selVendedor">Vendedor:</label>
+      <select class="vendedor-select" id="selVendedor" onchange="seleccionarVendedor(this.value)">
+        <option value="">-- Seleccionar --</option>
+      </select>
+    </div>
+    <button class="btn-outline-blue" onclick="abrirModalPDF()">&#11015; Exportar PDF</button>
+  </div>
+</header>
+
+<!-- Nav de categorias -->
+<nav class="cat-nav" id="catNav">
+  <button class="cat-tab active" data-cat="todos" onclick="filtrar('todos')">&#127968; Todos</button>
+  <button class="cat-tab" data-cat="toallas_rollo" onclick="filtrar('toallas_rollo')">🧻 Toallas en Rollo</button>
+  <button class="cat-tab" data-cat="toallas_intercaladas" onclick="filtrar('toallas_intercaladas')">📄 Toallas Intercaladas</button>
+  <button class="cat-tab" data-cat="papel_higienico" onclick="filtrar('papel_higienico')">🚿 Papel Higiénico</button>
+  <button class="cat-tab" data-cat="bobinas" onclick="filtrar('bobinas')">🔄 Bobinas</button>
+  <button class="cat-tab" data-cat="servilletas" onclick="filtrar('servilletas')">🍽️ Servilletas</button>
+  <button class="cat-tab" data-cat="panos" onclick="filtrar('panos')">🧹 Paños</button>
+  
+</nav>
+
+<!-- Busqueda -->
+<div class="search-wrap">
+  <div class="search-bar">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" id="searchInput" placeholder="Buscar por nombre, código o descripción..."
+           oninput="buscar(this.value)">
+  </div>
+</div>
+
+<!-- Contenido principal -->
+<div class="main-container">
+  <main id="mainContent"></main>
+  <!-- Footer vendedor -->
+  <div class="vendedor-footer" id="vendedorFooter">
+    <img class="vendedor-foto" id="vendedorFoto" src="" alt="">
+    <div class="vendedor-info">
+      <div class="vendedor-nombre" id="vendedorNombre"></div>
+      <div class="vendedor-cargo">Representante Comercial &nbsp;&middot;&nbsp; Melcity SA</div>
+      <div class="vendedor-contacto">
+        <span class="v-dato">&#128222; <span id="vendedorTel"></span></span>
+        <span class="v-sep">|</span>
+        <span class="v-dato">&#9993; <span id="vendedorEmail"></span></span>
+        <span class="v-sep">|</span>
+        <span class="v-dato">&#128247; <span id="vendedorIG"></span></span>
+        <span class="v-sep">|</span>
+        <span class="v-dato">&#127760; <span id="vendedorWeb"></span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Barra de comparacion -->
+<div class="compare-bar" id="compareBar">
+  <span class="compare-bar-label">Comparar:</span>
+  <div class="compare-bar-items" id="compareChips"></div>
+  <button class="btn btn-accent btn-sm" onclick="abrirComparacion()" id="btnCompararAhora">
+    Ver comparación
+  </button>
+  <button class="btn btn-outline btn-sm" onclick="limpiarComparacion()">Limpiar</button>
+</div>
+
+<!-- Modal comparacion -->
+<div class="modal-overlay" id="compareModal" onclick="cerrarSiOverlay(event,'compareModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Comparación de productos</h2>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn-print-comp" onclick="imprimirComparacion()" title="Imprimir comparación">&#128438; Imprimir</button>
+        <button class="modal-close" onclick="cerrarModal('compareModal')">&#x2715;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="compareModalBody"></div>
+  </div>
+</div>
+
+<!-- Modal PDF -->
+<div class="modal-overlay pdf-modal" id="pdfModal" onclick="cerrarSiOverlay(event,'pdfModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>&#11015; Exportar PDF</h2>
+      <button class="modal-close" onclick="cerrarModal('pdfModal')">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <div class="pdf-options">
+        <div class="pdf-option" onclick="imprimirTodo()">
+          <h3>&#128203; Catálogo completo</h3>
+          <p>Imprime todas las categorías y productos.</p>
+        </div>
+        <div class="pdf-option" onclick="imprimirCategoria()">
+          <h3>&#128194; Solo categoría actual</h3>
+          <p>Imprime únicamente la categoría seleccionada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRODUCTOS  = [{"codigo": "204010109", "categoria": "toallas_rollo", "nombre": "Elite Plus Toalla en Rollo SH 300M x2", "descripcion": "Toalla en rollo de hoja simple, 300 m por rollo. Ideal para dispensadores de autocorte o palanca en banos institucionales de alto trafico.", "caracteristicas": [["Linea", "Plus"], ["Capas", "1"], ["Metros por rollo", "300 m"], ["Rollos por pack", "2"], ["Total metros", "600 m"], ["Areas de uso", "Industrias, Hoteles, Restaurantes, Oficinas"], ["Cod. Elite", "C.6309"]], "foto": "img/6309.png", "precio_fmt": "$ 23.580 / par (2 rollos)", "precio_raw": 23580.0, "costo_uso_fmt": "$ 39,30 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "608020001", "categoria": "toallas_rollo", "nombre": "Elite Classic Toalla en Rollo SH 300M x2", "descripcion": "Toalla en rollo simple hoja de la linea Classic. Excelente relacion rendimiento-costo para instalaciones de gran demanda. Fibras recicladas.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Metros por rollo", "300 m"], ["Rollos por pack", "2"], ["Total metros", "600 m"], ["Areas de uso", "Industrias, Hoteles, Restaurantes, Oficinas"], ["Cod. Elite", "C.6203"]], "foto": "img/6203.png", "precio_fmt": "$ 20.290 / par (2 rollos)", "precio_raw": 20290.0, "costo_uso_fmt": "$ 33,82 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "204016299", "categoria": "toallas_rollo", "nombre": "Elite Classic Toalla en Rollo SH 200M x2", "descripcion": "Toalla en rollo simple hoja de 200 m. Formato compacto para dispensadores de menor capacidad. Linea Classic de alta performance.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Metros por rollo", "200 m"], ["Rollos por pack", "2"], ["Total metros", "400 m"], ["Areas de uso", "Industrias, Oficinas, Comercios"], ["Cod. Elite", "C.6299"]], "foto": "img/6299.png", "precio_fmt": "$ 13.790 / par (2 rollos)", "precio_raw": 13790.0, "costo_uso_fmt": "$ 34,48 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "608020093", "categoria": "toallas_rollo", "nombre": "Elite Excellence Toalla Non Touch DH 200M x2", "descripcion": "Toalla en rollo doble hoja con sistema Non Touch: dispensa automaticamente al acercar la mano, sin contacto fisico. Maxima higiene garantizada.", "caracteristicas": [["Linea", "Excellence"], ["Capas", "2"], ["Metros por rollo", "200 m"], ["Rollos por pack", "2"], ["Total metros", "400 m"], ["Sistema", "Non Touch (sin contacto)"], ["Areas de uso", "Hoteles, Centros de Salud, Oficinas premium"], ["Cod. Elite", "C.6298"]], "foto": "img/6298.png", "precio_fmt": "$ 24.980 / par (2 rollos)", "precio_raw": 24980.0, "costo_uso_fmt": "$ 62,45 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "608020007", "categoria": "papel_higienico", "nombre": "Elite Classic Higienico Jumbo SH 500M x4", "descripcion": "Papel higienico jumbo de hoja simple, cono grande, 500 m por rollo. Maxima duracion entre recargas para banos de altisimo trafico.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Metros por rollo", "500 m"], ["Rollos por pack", "4"], ["Total metros", "2.000 m"], ["Formato", "Jumbo cono grande"], ["Areas de uso", "Industrias, Hoteles, Shoppings, Aeropuertos"], ["Cod. Elite", "C.6109"]], "foto": "img/6109.png", "precio_fmt": "$ 19.510 / pack (4 rollos)", "precio_raw": 19510.0, "costo_uso_fmt": "$ 9,76 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "204010110", "categoria": "toallas_intercaladas", "nombre": "Elite Plus Toalla Intercalada SH Blanca 250x10", "descripcion": "Toalla interfoliada de hoja simple, una hoja a la vez. Formato 18x24 cm. Compatible con dispensadores de carga frontal. Alta absorcion y resistencia.", "caracteristicas": [["Linea", "Plus"], ["Capas", "1"], ["Tamano de hoja", "18 x 24 cm"], ["Hojas por paquete", "250"], ["Paquetes por caja", "10"], ["Total hojas", "2.500"], ["Areas de uso", "Industrias, Hoteles, Restaurantes, Oficinas"], ["Cod. Elite", "C.6283"]], "foto": "img/6283.png", "precio_fmt": "$ 24.760 / caja (10 paquetes x 250h)", "precio_raw": 24760.0, "costo_uso_fmt": "$ 9,90 / hoja", "unidad_costo_uso": "hoja", "tiene_precio": true}, {"codigo": "608020003", "categoria": "toallas_intercaladas", "nombre": "Elite Plus Toalla Intercalada 2 Paneles 250x10", "descripcion": "Toalla interfoliada de 2 paneles en hoja simple. Mayor superficie de secado por extraccion. Formato 19x20 cm.", "caracteristicas": [["Linea", "Plus"], ["Capas", "1"], ["Paneles", "2"], ["Tamano de hoja", "19 x 20 cm"], ["Hojas por paquete", "250"], ["Paquetes por caja", "10"], ["Total hojas", "2.500"], ["Areas de uso", "Industrias, Hoteles, Restaurantes, Oficinas"], ["Cod. Elite", "C.6295"]], "foto": "img/6295.png", "precio_fmt": "$ 26.820 / caja (10 paquetes x 250h)", "precio_raw": 26820.0, "costo_uso_fmt": "$ 10,73 / hoja", "unidad_costo_uso": "hoja", "tiene_precio": true}, {"codigo": "608026149", "categoria": "toallas_intercaladas", "nombre": "Elite Excellence Toalla Intercalada Cuadruple 150x18", "descripcion": "Toalla interfoliada de hoja cuadruple (4 capas), formato 21x22 cm. Maxima suavidad, absorcion y presentacion para espacios de alto nivel.", "caracteristicas": [["Linea", "Excellence"], ["Capas", "4"], ["Tamano de hoja", "21 x 22 cm"], ["Hojas por paquete", "150"], ["Paquetes por caja", "18"], ["Total hojas", "2.700"], ["Areas de uso", "Hoteles, Centros de Salud, Restaurantes premium"], ["Cod. Elite", "C.6149"]], "foto": "img/6149.png", "precio_fmt": "$ 87.170 / caja (18 paquetes x 150h)", "precio_raw": 87170.0, "costo_uso_fmt": "$ 32,29 / hoja", "unidad_costo_uso": "hoja", "tiene_precio": true}, {"codigo": "204010119", "categoria": "toallas_intercaladas", "nombre": "Elite Classic Toalla Intercalada 3 Paneles 200x10", "descripcion": "Toalla interfoliada de 3 paneles en hoja simple. Gran superficie de secado por extraccion. Linea Classic para uso intensivo.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Paneles", "3"], ["Hojas por paquete", "200"], ["Paquetes por caja", "10"], ["Total hojas", "2.000"], ["Areas de uso", "Industrias, Cocinas, Talleres, Comercios"], ["Cod. Elite", "C.6300"]], "foto": "img/6300.png", "precio_fmt": "$ 16.370 / caja (10 paquetes x 200h)", "precio_raw": 16370.0, "costo_uso_fmt": "$ 8,19 / hoja", "unidad_costo_uso": "hoja", "tiene_precio": true}, {"codigo": "201010103", "categoria": "papel_higienico", "nombre": "Elite Plus Higienico Jumbo SH 300M x4", "descripcion": "Papel higienico jumbo de hoja simple, cono grande, 300 m por rollo. Blancura y suavidad para satisfacer los usuarios mas exigentes. Alto metraje.", "caracteristicas": [["Linea", "Plus"], ["Capas", "1"], ["Metros por rollo", "300 m"], ["Rollos por pack", "4"], ["Total metros", "1.200 m"], ["Formato", "Jumbo cono grande"], ["Areas de uso", "Hoteles, Restaurantes, Industrias, Shoppings"], ["Cod. Elite", "C.6112"]], "foto": "img/6112.png", "precio_fmt": "$ 14.950 / pack (4 rollos)", "precio_raw": 14950.0, "costo_uso_fmt": "$ 12,46 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "608020008", "categoria": "papel_higienico", "nombre": "Elite Plus Higienico Jumbo SH 500M x4", "descripcion": "Papel higienico jumbo de hoja simple, cono grande, 500 m por rollo. El mayor rendimiento de la linea Plus. Maxima duracion entre recargas.", "caracteristicas": [["Linea", "Plus"], ["Capas", "1"], ["Metros por rollo", "500 m"], ["Rollos por pack", "4"], ["Total metros", "2.000 m"], ["Formato", "Jumbo cono grande"], ["Areas de uso", "Hoteles, Shoppings, Aeropuertos, Estadios"], ["Cod. Elite", "C.6128"]], "foto": "img/6128.png", "precio_fmt": "$ 24.400 / pack (4 rollos)", "precio_raw": 24400.0, "costo_uso_fmt": "$ 12,20 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "201016130", "categoria": "papel_higienico", "nombre": "Elite Classic Higienico Jumbo SH 300M x4", "descripcion": "Papel higienico jumbo de hoja simple, cono chico, 300 m por rollo. Linea Classic con fibras recicladas para instalaciones de costo optimizado.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Metros por rollo", "300 m"], ["Rollos por pack", "4"], ["Total metros", "1.200 m"], ["Formato", "Jumbo cono chico"], ["Areas de uso", "Industrias, Oficinas, Comercios, Educacion"], ["Cod. Elite", "C.6130"]], "foto": "img/6130.png", "precio_fmt": "$ 12.820 / pack (4 rollos)", "precio_raw": 12820.0, "costo_uso_fmt": "$ 10,68 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "204010108", "categoria": "bobinas", "nombre": "Elite Plus Bobina DH Industrial 400M x2", "descripcion": "Bobina doble hoja industrial de 400 m, ancho 24 cm. Blancura y suavidad combinadas con maxima absorcion para cocinas y catering de alto volumen.", "caracteristicas": [["Linea", "Plus"], ["Capas", "2"], ["Metros por bobina", "400 m"], ["Ancho", "24 cm"], ["Bobinas por pack", "2"], ["Total metros", "800 m"], ["Areas de uso", "Cocinas industriales, Catering, HORECA"], ["Cod. Elite", "C.6264"]], "foto": "img/6264.png", "precio_fmt": "$ 31.730 / par (2 bobinas)", "precio_raw": 31730.0, "costo_uso_fmt": "$ 39,66 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "608010547", "categoria": "bobinas", "nombre": "Elite Excellence Bobina DH 200M x2 (1000 usos)", "descripcion": "Bobina doble hoja con pre-corte, 200 m por bobina y sistema de 1000 usos. Dispensador de alto rendimiento para oficinas ejecutivas y banos premium.", "caracteristicas": [["Linea", "Excellence"], ["Capas", "2"], ["Metros por bobina", "200 m"], ["Bobinas por pack", "2"], ["Total metros", "400 m"], ["Sistema", "Pre-corte / 1000 usos"], ["Areas de uso", "Hoteles, Oficinas ejecutivas, Salud"], ["Cod. Elite", "C.6213"]], "foto": "img/6213.png", "precio_fmt": "$ 15.280 / par (2 bobinas)", "precio_raw": 15280.0, "costo_uso_fmt": "$ 38,20 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "608020000", "categoria": "bobinas", "nombre": "Elite Classic Bobina SH Industrial 400M x2", "descripcion": "Bobina simple hoja industrial de 400 m. Solucion economica de gran rendimiento para cocinas, talleres e industrias. Fibras recicladas.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Metros por bobina", "400 m"], ["Bobinas por pack", "2"], ["Total metros", "800 m"], ["Areas de uso", "Cocinas industriales, Talleres, Industrias"], ["Cod. Elite", "C.6214"]], "foto": "img/6214.png", "precio_fmt": "$ 36.210 / par (2 bobinas)", "precio_raw": 36210.0, "costo_uso_fmt": "$ 45,26 / metro", "unidad_costo_uso": "metro", "tiene_precio": true}, {"codigo": "203010104", "categoria": "servilletas", "nombre": "Elite Plus Servilleta SH Blanca 200u x5 (30x30)", "descripcion": "Servilleta de hoja simple, formato 30x30 cm. Alta performance y optima absorcion. Caja de 5 paquetes de 200 unidades cada uno.", "caracteristicas": [["Linea", "Plus"], ["Capas", "1"], ["Medida", "30 x 30 cm"], ["Unidades/paquete", "200"], ["Paquetes por caja", "5"], ["Total unidades", "1.000"], ["Color", "Blanca"], ["Areas de uso", "Comedores, Restaurantes, Hoteles, Cantinas"], ["Cod. Elite", "C.6567"]], "foto": "img/6567.png", "precio_fmt": "$ 12.550 / caja (5 paquetes x 200u)", "precio_raw": 12550.0, "costo_uso_fmt": "$ 12,55 / servilleta", "unidad_costo_uso": "servilleta", "tiene_precio": true}, {"codigo": "608020016", "categoria": "servilletas", "nombre": "Elite Classic Servilleta Intercalada 10x21 250x72", "descripcion": "Servilleta intercalada de hoja simple, formato 10x21 cm. Ideal para dispensadores de servilletero en bares y locales de comidas. Gran rendimiento por caja.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Medida", "10 x 21 cm"], ["Unidades/paquete", "250"], ["Paquetes por caja", "72"], ["Total unidades", "18.000"], ["Color", "Blanca"], ["Areas de uso", "Bares, Fast food, Cafeterias, Dispensadores"], ["Cod. Elite", "C.6523"]], "foto": "img/6523.png", "precio_fmt": "$ 75.820 / caja (72 paquetes x 250u)", "precio_raw": 75820.0, "costo_uso_fmt": "$ 4,21 / servilleta", "unidad_costo_uso": "servilleta", "tiene_precio": true}, {"codigo": "608020017", "categoria": "servilletas", "nombre": "Elite Classic Servilleta Fast Food 16.5x20 350x24", "descripcion": "Servilleta fast food de hoja simple, formato 16.5x20 cm. Ecologica. Diseno practico para servilleteros de mesa en locales de comida rapida.", "caracteristicas": [["Linea", "Classic"], ["Capas", "1"], ["Medida", "16,5 x 20 cm"], ["Unidades/paquete", "350"], ["Paquetes por caja", "24"], ["Total unidades", "8.400"], ["Color", "Blanca"], ["Areas de uso", "Fast food, Cafeterias, Comedores universitarios"], ["Cod. Elite", "C.6540"]], "foto": "img/6540.png", "precio_fmt": "$ 48.570 / caja (24 paquetes x 350u)", "precio_raw": 48570.0, "costo_uso_fmt": "$ 5,78 / servilleta", "unidad_costo_uso": "servilleta", "tiene_precio": true}, {"codigo": "608020066", "categoria": "panos", "nombre": "Maxwipe Max 50 Bobina 690 panos", "descripcion": "Pano en bobina para trabajos livianos y superficies lisas. Especial para liquidos de baja densidad. Suave y absorbente. Ideal para servicios de comida.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 50"], ["Presentacion", "Bobina"], ["Panos por bobina", "690"], ["Tamano por pano", "26,8 x 29,5 cm"], ["Long. del rollo", "203,5 m"], ["Color", "Blanco"], ["Areas de uso", "HORECA, Oficinas"], ["Cod. Elite", "C.6389"]], "foto": "img/6389.png", "precio_fmt": "$ 51.780 / bobina (690 paños)", "precio_raw": 51780.0, "costo_uso_fmt": "$ 75,04 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}, {"codigo": "608020085", "categoria": "panos", "nombre": "Maxwipe Max 60 Bobina 890 panos", "descripcion": "Pano en bobina ideal para todo tipo de superficies. Mayor suavidad y buena velocidad de absorcion. Menor reposicion por la alta cantidad de panos por bobina.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 60"], ["Presentacion", "Bobina"], ["Panos por bobina", "890"], ["Tamano por pano", "26,8 x 29,5 cm"], ["Long. del rollo", "262,6 m"], ["Color", "Blanco"], ["Areas de uso", "HORECA, Oficinas"], ["Cod. Elite", "C.6384"]], "foto": "img/6384.png", "precio_fmt": "$ 92.240 / bobina (890 paños)", "precio_raw": 92240.0, "costo_uso_fmt": "$ 103,64 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}, {"codigo": "608020086", "categoria": "panos", "nombre": "Maxwipe Max 60 Doblado Estuche 50u x12", "descripcion": "Pano Max 60 en formato doblado, hojas apiladas para facil extraccion. Ideal para puestos fijos. Caja de 12 estuches x 50 unidades.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 60"], ["Presentacion", "Doblado (estuche)"], ["Tamano por pano", "24,8 x 40 cm"], ["Panos/estuche", "50"], ["Estuches/caja", "12"], ["Total panos", "600"], ["Color", "Blanco"], ["Areas de uso", "HORECA, Oficinas, Salud"], ["Cod. Elite", "C.6385"]], "foto": "img/6385.png", "precio_fmt": "$ 83.880 / caja (12 estuches x 50u)", "precio_raw": 83880.0, "costo_uso_fmt": "$ 139,80 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}, {"codigo": "608020087", "categoria": "panos", "nombre": "Maxwipe Max 70 Bobina 750 panos", "descripcion": "Pano en bobina especial para limpieza de aceites y grasas. Alta resistencia y absorcion. Bajo nivel de despeluce. Reemplaza trapos y panos convencionales.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 70"], ["Presentacion", "Bobina"], ["Panos por bobina", "750"], ["Tamano por pano", "27,8 x 33,5 cm"], ["Long. del rollo", "251 m"], ["Color", "Blanco"], ["Areas de uso", "HORECA, Industrias"], ["Cod. Elite", "C.6386"]], "foto": "img/6386.png", "precio_fmt": "$ 104.730 / bobina (750 paños)", "precio_raw": 104730.0, "costo_uso_fmt": "$ 139,64 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}, {"codigo": "608020088", "categoria": "panos", "nombre": "Maxwipe Max 80 Rollo 80u x6 Blanco", "descripcion": "Pano en rollo de maxima resistencia y absorcion. Especial para aceites y grasas pesadas. Reutilizable. Minimo despeluce. Color blanco.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 80"], ["Presentacion", "Rollo"], ["Panos por rollo", "80"], ["Tamano por pano", "27,8 x 33,5 cm"], ["Long. del rollo", "26,8 m"], ["Rollos por caja", "6"], ["Total panos", "480"], ["Color", "Blanco"], ["Areas de uso", "HORECA, Industrias"], ["Cod. Elite", "C.6388"]], "foto": "img/6388.png", "precio_fmt": "$ 127.350 / caja (6 rollos x 80u) - Blanco", "precio_raw": 127350.0, "costo_uso_fmt": "$ 265,31 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}, {"codigo": "608020089", "categoria": "panos", "nombre": "Maxwipe Max 80 Rollo 80u x6 Azul", "descripcion": "Pano en rollo Max 80 en color azul para diferenciacion de zonas segun protocolo HACCP. Maxima resistencia para aceites y grasas pesadas. Reutilizable.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 80"], ["Presentacion", "Rollo"], ["Panos por rollo", "80"], ["Tamano por pano", "27,8 x 41 cm"], ["Long. del rollo", "32,8 m"], ["Rollos por caja", "6"], ["Total panos", "480"], ["Color", "Azul (diferenciacion HACCP)"], ["Areas de uso", "HORECA"], ["Cod. Elite", "C.6387"]], "foto": "img/6387.png", "precio_fmt": "$ 144.020 / caja (6 rollos x 80u) - Azul", "precio_raw": 144020.0, "costo_uso_fmt": "$ 300,04 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}, {"codigo": "608020090", "categoria": "panos", "nombre": "Maxwipe Max 70 Rollo 88u x6", "descripcion": "Pano Max 70 en formato rollo con 88 unidades por rollo. Alta resistencia para aceites y grasas. Bajo despeluce. Caja de 6 rollos.", "caracteristicas": [["Linea", "Maxwipe"], ["Modelo", "Max 70"], ["Presentacion", "Rollo"], ["Panos por rollo", "88"], ["Rollos por caja", "6"], ["Total panos", "528"], ["Color", "Blanco"], ["Areas de uso", "HORECA, Industrias"], ["Cod. Elite", "C.6286"]], "foto": "img/6286.png", "precio_fmt": "$ 118.980 / caja (6 rollos x 88u)", "precio_raw": 118980.0, "costo_uso_fmt": "$ 225,34 / paño", "unidad_costo_uso": "pano", "tiene_precio": true}];
+const CATEGORIAS = {"toallas_rollo": {"label": "Toallas en Rollo", "icono": "🧻"}, "toallas_intercaladas": {"label": "Toallas Intercaladas", "icono": "📄"}, "papel_higienico": {"label": "Papel Higiénico", "icono": "🚿"}, "bobinas": {"label": "Bobinas", "icono": "🔄"}, "servilletas": {"label": "Servilletas", "icono": "🍽️"}, "panos": {"label": "Paños", "icono": "🧹"}};
+const VENDEDORES = [{"nombre": "Ignacio Perez", "tel": "11-3142-3633", "email": "nacho@melcity.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Soledad Santa Marinha", "tel": "11-5800-1730", "email": "sol@melcity.com.ar", "foto": "img/vendedora.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Valentin Perez", "tel": "11-2534-8052", "email": "valentin@melcity.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Christian Perez", "tel": "11-4048-6391", "email": "christian@melcity.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Rosanna Prudencio", "tel": "11-5507-5518", "email": "rochi@melcity.com.ar", "foto": "img/vendedora.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Patricio Fernández", "tel": "11-5853-2759", "email": "patricio@melcity.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Ezequiel Fernandez", "tel": "11-2847-6166", "email": "luisguillon@cleanciti.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Jesica Rodriguez", "tel": "11-2847-6166", "email": "luisguillon@cleanciti.com.ar", "foto": "img/vendedora.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Juan Espindola", "tel": "11-2847-6166", "email": "luisguillon@cleanciti.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Rocio Avalo", "tel": "11-4156-6010", "email": "info@cleanciti.com.ar", "foto": "img/vendedora.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Cecilia Fantin", "tel": "11-4156-6010", "email": "info@cleanciti.com.ar", "foto": "img/vendedora.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Galo Cabrera", "tel": "11-4156-6010", "email": "info@cleanciti.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}, {"nombre": "Manuel Herrera", "tel": "11-2364-8450", "email": "lomas@cleanciti.com.ar", "foto": "img/vendedor.png", "ig": "@melcity.distribuidora", "web": "www.melcity.com.ar"}];
+
+let catActiva       = 'todos';
+let comparados      = [];
+let terminoBusqueda = '';
+
+const LINE_MAP = {
+  'excellence': { cls: 'line-excellence', label: 'EXCELLENCE' },
+  'plus':       { cls: 'line-plus',       label: 'PLUS'       },
+  'classic':    { cls: 'line-classic',    label: 'CLASSIC'    },
+  'maxwipe':    { cls: 'line-maxwipe',    label: 'MAXWIPE'    },
+};
+
+function getLineInfo(caracteristicas) {
+  const lc = caracteristicas.find(([k]) => k === 'Linea');
+  if (!lc) return { cls: '', label: '' };
+  const key = lc[1].toLowerCase();
+  return LINE_MAP[key] || { cls: '', label: lc[1].toUpperCase() };
+}
+
+function getCodeElite(caracteristicas) {
+  const c = caracteristicas.find(([k]) => k === 'Cod. Elite');
+  return c ? c[1] : '';
+}
+
+function render() {
+  const main = document.getElementById('mainContent');
+  main.innerHTML = '';
+
+  const filtrados = PRODUCTOS.filter(p => {
+    const enCat  = catActiva === 'todos' || p.categoria === catActiva;
+    const enBusc = !terminoBusqueda ||
+      p.nombre.toLowerCase().includes(terminoBusqueda) ||
+      p.codigo.toLowerCase().includes(terminoBusqueda) ||
+      p.descripcion.toLowerCase().includes(terminoBusqueda);
+    return enCat && enBusc;
+  });
+
+  if (!filtrados.length) {
+    main.innerHTML = '<div class="empty-state"><div class="icon">&#128269;</div>' +
+      '<p>No se encontraron productos que coincidan con la búsqueda.</p></div>';
+    return;
+  }
+
+  const porCat = {};
+  filtrados.forEach(p => {
+    if (!porCat[p.categoria]) porCat[p.categoria] = [];
+    porCat[p.categoria].push(p);
+  });
+
+  const orden = Object.keys(CATEGORIAS);
+  const cats  = catActiva === 'todos'
+    ? orden.filter(k => porCat[k])
+    : (porCat[catActiva] ? [catActiva] : []);
+
+  cats.forEach(cat => {
+    const info  = CATEGORIAS[cat];
+    // Ordenar por precio (sin precio al final)
+    const items = porCat[cat].slice().sort((a, b) => {
+      if (a.precio_raw === null && b.precio_raw === null) return 0;
+      if (a.precio_raw === null) return 1;
+      if (b.precio_raw === null) return -1;
+      return a.precio_raw - b.precio_raw;
+    });
+    const section = document.createElement('section');
+    section.className   = 'cat-section';
+    section.dataset.cat = cat;
+    section.innerHTML   =
+      '<div class="cat-banner">' +
+        '<span class="cat-banner-icon">' + info.icono + '</span>' +
+        '<div>' +
+          '<div class="cat-banner-title">' + info.label + '</div>' +
+          '<div class="cat-banner-count">' + items.length + ' producto' + (items.length !== 1 ? 's' : '') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="product-grid">' + items.map(cardHTML).join('') + '</div>';
+    main.appendChild(section);
+  });
+}
+
+function cardHTML(p) {
+  const enComp   = comparados.includes(p.codigo);
+  const maxComp  = comparados.length >= 2 && !enComp;
+  const icono    = CATEGORIAS[p.categoria] ? CATEGORIAS[p.categoria].icono : '&#128230;';
+  const line     = getLineInfo(p.caracteristicas);
+  const codElite = getCodeElite(p.caracteristicas);
+
+  const SKIP = new Set(['Linea', 'Cod. Elite']);
+  const visible = p.caracteristicas.filter(([k]) => !SKIP.has(k));
+  const first4  = visible.slice(0, 4);
+  const rest    = visible.slice(4);
+
+  const toLi = arr => arr.map(([k, v]) =>
+    '<li><span class="sk">' + k + ':</span> <strong>' + v + '</strong></li>'
+  ).join('');
+
+  let extraHtml = '';
+  if (rest.length) {
+    extraHtml =
+      '<button class="btn-ver-mas" onclick="toggleDetalles(&apos;' + p.codigo + '&apos;)">' +
+        '+ ' + rest.length + ' más &#8964;</button>' +
+      '<ul class="specs-extra specs-list" id="full-' + p.codigo + '">' + toLi(rest) + '</ul>';
+  }
+
+  let precioHtml;
+  if (p.tiene_precio) {
+    const parts = p.precio_fmt.split(' / ');
+    precioHtml =
+      '<div class="price-main">' + parts[0] + '</div>' +
+      '<div class="price-label">' + parts.slice(1).join(' / ') + '</div>' +
+      '<div class="price-uso">' + costoLabel(p.unidad_costo_uso) + ' <strong>' + p.costo_uso_fmt + '</strong></div>';
+  } else {
+    precioHtml = '<div class="price-sin">Precio no cargado</div>';
+  }
+
+  return (
+    '<div class="product-card' + (enComp ? ' selected' : '') + '" id="card-' + p.codigo + '">' +
+      '<div class="line-bar ' + line.cls + '"><span class="line-label">' + line.label + '</span></div>' +
+      '<div class="card-main">' +
+        '<div class="img-wrap">' +
+          '<img src="' + p.foto + '" alt="' + p.nombre + '" onerror="this.hidden=true">' +
+          '<div class="img-fallback">' + icono + '</div>' +
+        '</div>' +
+        '<div class="card-body">' +
+          (codElite ? '<div class="prod-code">COD. ' + codElite + '</div>' : '') +
+          '<div class="prod-name">' + p.nombre + '</div>' +
+          '<ul class="specs-list">' + toLi(first4) + '</ul>' +
+          extraHtml +
+          '<hr class="card-divider">' +
+          '<div class="product-pricing">' + precioHtml + '</div>' +
+        '</div>' +
+        '<div class="card-footer">' +
+          '<button class="btn-compare' + (enComp ? ' active' : '') + '"' +
+            (maxComp ? ' disabled title="Máximo 2 productos"' : '') +
+            ' onclick="toggleComparar(&apos;' + p.codigo + '&apos;)">' +
+            (enComp ? '&#10003; Comparando' : '+ Comparar') +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function filtrar(cat) {
+  catActiva = cat;
+  document.querySelectorAll('.cat-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.cat === cat));
+  render();
+}
+
+function buscar(val) {
+  terminoBusqueda = val.toLowerCase().trim();
+  render();
+}
+
+function toggleDetalles(codigo) {
+  const el  = document.getElementById('full-' + codigo);
+  const btn = el ? el.previousElementSibling : null;
+  if (!el) return;
+  const abierto = el.classList.toggle('open');
+  if (btn) btn.textContent = abierto ? 'Ver menos ▴' : '+ ' + el.children.length + ' más ▾';
+}
+
+function toggleComparar(codigo) {
+  const idx = comparados.indexOf(codigo);
+  if (idx >= 0) {
+    comparados.splice(idx, 1);
+  } else if (comparados.length < 2) {
+    comparados.push(codigo);
+  }
+  actualizarBarraComparacion();
+  render();
+}
+
+function limpiarComparacion() {
+  comparados = [];
+  actualizarBarraComparacion();
+  render();
+}
+
+function actualizarBarraComparacion() {
+  const bar   = document.getElementById('compareBar');
+  const chips = document.getElementById('compareChips');
+  const btn   = document.getElementById('btnCompararAhora');
+  if (!comparados.length) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  chips.innerHTML = comparados.map(cod => {
+    const p = PRODUCTOS.find(x => x.codigo === cod);
+    return '<div class="compare-chip"><span>' + (p ? p.nombre : cod) + '</span>' +
+      '<button onclick="toggleComparar(&apos;' + cod + '&apos;)" title="Quitar">&#x2715;</button></div>';
+  }).join('');
+  btn.disabled      = comparados.length < 2;
+  btn.style.opacity = comparados.length < 2 ? '.5' : '1';
+}
+
+function abrirComparacion() {
+  if (comparados.length < 2) return;
+  const [a, b] = comparados.map(c => PRODUCTOS.find(p => p.codigo === c));
+  if (!a || !b) return;
+  const keysA   = a.caracteristicas.map(([k]) => k);
+  const keysB   = b.caracteristicas.map(([k]) => k);
+  const allKeys = [...new Set([...keysA, ...keysB])];
+  const getVal  = (prod, key) => {
+    const found = prod.caracteristicas.find(([k]) => k === key);
+    return found ? found[1] : '—';
+  };
+  const rows = allKeys.map(k =>
+    '<tr><td>' + k + '</td><td>' + getVal(a, k) + '</td><td>' + getVal(b, k) + '</td></tr>'
+  ).join('');
+  document.getElementById('compareModalBody').innerHTML =
+    '<table class="compare-table"><thead><tr>' +
+      '<th>Característica</th><th>' + a.nombre + '</th><th>' + b.nombre + '</th>' +
+    '</tr></thead><tbody>' +
+    '<tr class="compare-img-row">' +
+      '<td>Foto</td>' +
+      '<td><img src="' + a.foto + '" onerror="this.hidden=true" alt="' + a.nombre + '"></td>' +
+      '<td><img src="' + b.foto + '" onerror="this.hidden=true" alt="' + b.nombre + '"></td>' +
+    '</tr>' +
+    rows +
+    '<tr class="compare-price-row">' +
+      '<td>Precio</td><td>' + a.precio_fmt + '</td><td>' + b.precio_fmt + '</td>' +
+    '</tr>' +
+    '<tr><td>Costo en uso</td><td>' + a.costo_uso_fmt + '</td><td>' + b.costo_uso_fmt + '</td></tr>' +
+    '</tbody></table>';
+  document.getElementById('compareModal').classList.add('open');
+}
+
+function abrirModalPDF() {
+  document.getElementById('pdfModal').classList.add('open');
+}
+
+function imprimirComparacion() {
+  const footer = document.getElementById('vendedorFooter');
+  let clonedFooter = null;
+  if (footer && footer.classList.contains('visible')) {
+    clonedFooter = footer.cloneNode(true);
+    clonedFooter.id = 'vendedorFooterPrint';
+    clonedFooter.style.marginTop = '24px';
+    clonedFooter.style.borderRadius = '8px';
+    document.getElementById('compareModalBody').appendChild(clonedFooter);
+  }
+  document.body.classList.add('printing-compare');
+  setTimeout(() => {
+    window.print();
+    document.body.classList.remove('printing-compare');
+    if (clonedFooter) clonedFooter.remove();
+  }, 150);
+}
+
+function imprimirTodo() {
+  document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('print-hide'));
+  cerrarModal('pdfModal');
+  setTimeout(() => window.print(), 150);
+}
+
+function imprimirCategoria() {
+  const actual = catActiva === 'todos' ? null : catActiva;
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.classList.toggle('print-hide', !!actual && s.dataset.cat !== actual);
+  });
+  cerrarModal('pdfModal');
+  setTimeout(() => {
+    window.print();
+    document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('print-hide'));
+  }, 150);
+}
+
+function cerrarModal(id) { document.getElementById(id).classList.remove('open'); }
+function cerrarSiOverlay(e, id) { if (e.target.id === id) cerrarModal(id); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { cerrarModal('compareModal'); cerrarModal('pdfModal'); }
+});
+
+// ─── Etiqueta de costo según unidad ─────────────────────────────────────────
+function costoLabel(unidad) {
+  const map = {
+    'metro':      'Costo por metro:',
+    'hoja':       'Costo por hoja:',
+    'servilleta': 'Costo por servilleta:',
+    'pano':       'Costo por paño:',
+  };
+  return map[unidad] || 'Costo en uso:';
+}
+
+// ─── Vendedor ────────────────────────────────────────────────────────────────
+function seleccionarVendedor(nombre) {
+  const footer = document.getElementById('vendedorFooter');
+  if (!nombre) { footer.classList.remove('visible'); return; }
+  const v = VENDEDORES.find(x => x.nombre === nombre);
+  if (!v) { footer.classList.remove('visible'); return; }
+  document.getElementById('vendedorFoto').src              = v.foto;
+  document.getElementById('vendedorFoto').alt              = v.nombre;
+  document.getElementById('vendedorNombre').textContent    = v.nombre;
+  document.getElementById('vendedorTel').textContent       = v.tel;
+  document.getElementById('vendedorEmail').textContent     = v.email;
+  document.getElementById('vendedorIG').textContent        = v.ig;
+  document.getElementById('vendedorWeb').textContent       = v.web;
+  footer.classList.add('visible');
+}
+
+// Poblar dropdown desde VENDEDORES
+(function() {
+  const sel = document.getElementById('selVendedor');
+  VENDEDORES.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v.nombre;
+    opt.textContent = v.nombre;
+    sel.appendChild(opt);
+  });
+})();
+
+render();
+</script>
+</body>
+</html>
