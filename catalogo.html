@@ -601,7 +601,7 @@ body { font-family: var(--font); background: var(--blue-50); color: var(--gray-7
   <div class="header-title">
     <h1>Catálogo de Productos</h1>
     <img class="header-title-elite" src="img/logo_elite.png" alt="Elite">
-    <span class="header-subtitle">Actualizado: 11/05/2026 13:46</span>
+    <span class="header-subtitle">Actualizado: 11/05/2026 14:33</span>
   </div>
   <div class="header-actions">
     <div class="vendedor-wrap">
@@ -617,12 +617,12 @@ body { font-family: var(--font); background: var(--blue-50); color: var(--gray-7
 <!-- Nav de categorias -->
 <nav class="cat-nav" id="catNav">
   <button class="cat-tab active" data-cat="todos" onclick="filtrar('todos')">&#127968; Todos</button>
-  <button class="cat-tab" data-cat="toallas_rollo" onclick="filtrar('toallas_rollo')">🧻 Toallas en Rollo</button>
-  <button class="cat-tab" data-cat="toallas_intercaladas" onclick="filtrar('toallas_intercaladas')">📄 Toallas Intercaladas</button>
-  <button class="cat-tab" data-cat="papel_higienico" onclick="filtrar('papel_higienico')">🚿 Papel Higiénico</button>
-  <button class="cat-tab" data-cat="bobinas" onclick="filtrar('bobinas')">🔄 Bobinas</button>
-  <button class="cat-tab" data-cat="servilletas" onclick="filtrar('servilletas')">🍽️ Servilletas</button>
-  <button class="cat-tab" data-cat="panos" onclick="filtrar('panos')">🧹 Paños</button>
+  <button class="cat-tab" data-cat="toallas_rollo" onclick="filtrar('toallas_rollo')">Toallas en Rollo</button>
+  <button class="cat-tab" data-cat="toallas_intercaladas" onclick="filtrar('toallas_intercaladas')">Toallas Intercaladas</button>
+  <button class="cat-tab" data-cat="papel_higienico" onclick="filtrar('papel_higienico')">Papel Higiénico</button>
+  <button class="cat-tab" data-cat="bobinas" onclick="filtrar('bobinas')">Bobinas</button>
+  <button class="cat-tab" data-cat="servilletas" onclick="filtrar('servilletas')">Servilletas</button>
+  <button class="cat-tab" data-cat="panos" onclick="filtrar('panos')">Paños</button>
   
 </nav>
 
@@ -775,7 +775,6 @@ function render() {
     section.dataset.cat = cat;
     section.innerHTML   =
       '<div class="cat-banner">' +
-        '<span class="cat-banner-icon">' + info.icono + '</span>' +
         '<div>' +
           '<div class="cat-banner-title">' + info.label + '</div>' +
           '<div class="cat-banner-count">' + items.length + ' producto' + (items.length !== 1 ? 's' : '') + '</div>' +

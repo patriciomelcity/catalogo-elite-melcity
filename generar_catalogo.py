@@ -1505,7 +1505,6 @@ function render() {
     section.dataset.cat = cat;
     section.innerHTML   =
       '<div class="cat-banner">' +
-        '<span class="cat-banner-icon">' + info.icono + '</span>' +
         '<div>' +
           '<div class="cat-banner-title">' + info.label + '</div>' +
           '<div class="cat-banner-count">' + items.length + ' producto' + (items.length !== 1 ? 's' : '') + '</div>' +
@@ -1755,7 +1754,7 @@ render();
 def generar_html(datos_js: list, vendedores_js: list, fecha: str) -> str:
     cats_tabs = "".join(
         f'<button class="cat-tab" data-cat="{k}" onclick="filtrar(\'{k}\')">'
-        f'{v["icono"]} {v["label"]}</button>\n  '
+        f'{v["label"]}</button>\n  '
         for k, v in CATEGORIAS.items()
     )
 
