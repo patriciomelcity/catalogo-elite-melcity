@@ -309,6 +309,7 @@ PRODUCTOS = [
         "unidad_costo_uso": "metro",
         "total_unidades": 1440,
         "precio_base_label": "bolson (48 rollos)",
+        "grupo": 2,
     },
     {
         "codigo": "6607",
@@ -330,6 +331,7 @@ PRODUCTOS = [
         "unidad_costo_uso": "metro",
         "total_unidades": 2400,
         "precio_base_label": "bolson (48 rollos)",
+        "grupo": 2,
     },
     {
         "codigo": "6122",
@@ -351,6 +353,7 @@ PRODUCTOS = [
         "unidad_costo_uso": "metro",
         "total_unidades": 4000,
         "precio_base_label": "bolson (40 rollos)",
+        "grupo": 2,
     },
     {
         "codigo": "6616",
@@ -373,6 +376,7 @@ PRODUCTOS = [
         "unidad_costo_uso": "metro",
         "total_unidades": 1200,
         "precio_base_label": "bolson (40 rollos)",
+        "grupo": 2,
     },
 
     # ── BOBINAS ───────────────────────────────────────────────────────────────
@@ -457,6 +461,7 @@ PRODUCTOS = [
         "unidad_costo_uso": "metro",
         "total_unidades": 307.5,
         "precio_base_label": "bolson (30 rollos)",
+        "grupo": 2,
     },
     {
         "codigo": "6639",
@@ -477,6 +482,7 @@ PRODUCTOS = [
         "unidad_costo_uso": "metro",
         "total_unidades": 360,
         "precio_base_label": "bolson (12 rollos)",
+        "grupo": 2,
     },
 
     # ── SERVILLETAS ───────────────────────────────────────────────────────────
@@ -852,6 +858,7 @@ def construir_datos_js(precios: dict) -> list:
             "costo_uso_fmt":   costo_uso_fmt,
             "unidad_costo_uso":p["unidad_costo_uso"],
             "tiene_precio":    precio is not None,
+            "grupo":           p.get("grupo", 1),
         })
 
     if sin_precio:
@@ -1622,8 +1629,10 @@ function render() {
 
   cats.forEach(cat => {
     const info  = CATEGORIAS[cat];
-    // Ordenar por precio (sin precio al final)
+    // Ordenar por grupo (1=principal, 2=al final) y dentro de cada grupo por precio
     const items = porCat[cat].slice().sort((a, b) => {
+      const ga = a.grupo || 1, gb = b.grupo || 1;
+      if (ga !== gb) return ga - gb;
       if (a.precio_raw === null && b.precio_raw === null) return 0;
       if (a.precio_raw === null) return 1;
       if (b.precio_raw === null) return -1;
